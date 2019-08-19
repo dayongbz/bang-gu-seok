@@ -1,12 +1,12 @@
 import React from 'react';
 import './reset.css';
 import './App.css';
-import Test from './component/Test';
+import Weather from './component/Weather';
 
 function App() {
   return (
     <>
-      <div id="mainWrapper" />
+      <div id="background" />
       <div id="unsplashPhoto">
         <p>
           Photo by
@@ -17,7 +17,7 @@ function App() {
           <br />
         </p>
       </div>
-      <Test />
+      <Weather />
     </>
   );
 }
