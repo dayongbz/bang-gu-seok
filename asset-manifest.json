@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/bang-gu-seok/static/css/main.a8b6c546.chunk.css",
+    "main.js": "/bang-gu-seok/static/js/main.51c861bd.chunk.js",
+    "main.js.map": "/bang-gu-seok/static/js/main.51c861bd.chunk.js.map",
+    "runtime~main.js": "/bang-gu-seok/static/js/runtime~main.ddac98f9.js",
+    "runtime~main.js.map": "/bang-gu-seok/static/js/runtime~main.ddac98f9.js.map",
+    "static/js/2.166bb6d2.chunk.js": "/bang-gu-seok/static/js/2.166bb6d2.chunk.js",
+    "static/js/2.166bb6d2.chunk.js.map": "/bang-gu-seok/static/js/2.166bb6d2.chunk.js.map",
+    "index.html": "/bang-gu-seok/index.html",
+    "precache-manifest.6368a9f044d0608d29cb0242296962ad.js": "/bang-gu-seok/precache-manifest.6368a9f044d0608d29cb0242296962ad.js",
+    "service-worker.js": "/bang-gu-seok/service-worker.js",
+    "static/css/main.a8b6c546.chunk.css.map": "/bang-gu-seok/static/css/main.a8b6c546.chunk.css.map"
+  }
+}
