@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <div id="background" />
-      <div id="unsplashPhoto">
+      {/* <div id="unsplashPhoto">
         <p>
           Photo by
           <br />
@@ -16,7 +16,7 @@ function App() {
           </a>
           <br />
         </p>
-      </div>
+      </div> */}
       <Weather />
     </>
   );

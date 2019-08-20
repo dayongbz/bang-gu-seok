@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import moment from 'moment-timezone';
-import WeatherTimePosition from './WeatherTimePosition';
-import WeatherImage from './WeatherImage';
+import WeatherCard from './WeatherCard';
 import xyConv from './xyConv';
 
 export default function Weather() {
@@ -11,12 +10,12 @@ export default function Weather() {
   const [weather, setWeather] = useState();
 
   useEffect(() => {
-    function getPostion(p) {
+    function getPostion(lat, long) {
       axios
         .get(
-          `https://cors-anywhere.herokuapp.com/https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?request=coordsToaddr&coords=${+p.coords.longitude.toFixed(
+          `https://cors-anywhere.herokuapp.com/https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?request=coordsToaddr&coords=${long.toFixed(
             4,
-          )},${+p.coords.latitude.toFixed(4)}&orders=admcode&output=json`,
+          )},${+lat.toFixed(4)}&orders=admcode&output=json`,
           {
             headers: {
               'X-NCP-APIGW-API-KEY-ID': 'y6syzp2el8',
@@ -26,27 +25,37 @@ export default function Weather() {
         )
         .then(data => {
           setPosition({
-            latitude: +p.coords.latitude.toFixed(4),
-            longitude: +p.coords.longitude.toFixed(4),
+            latitude: +lat.toFixed(4),
+            longitude: +long.toFixed(4),
             dong: data.data.results[0].region.area3.name,
           });
           window.localStorage.setItem(
             'position',
             JSON.stringify({
-              latitude: +p.coords.latitude.toFixed(4),
-              longitude: +p.coords.longitude.toFixed(4),
+              latitude: +lat.toFixed(4),
+              longitude: +long.toFixed(4),
               dong: data.data.results[0].region.area3.name,
             }),
           );
         });
     }
-    navigator.geolocation.getCurrentPosition(p => {
-      if (!window.localStorage.getItem('position')) {
-        getPostion(p);
-      } else {
-        setPosition(JSON.parse(window.localStorage.getItem('position')));
-      }
-    });
+    navigator.geolocation.getCurrentPosition(
+      p => {
+        if (!window.localStorage.getItem('position')) {
+          getPostion(p.coords.latitude, p.coords.longitude);
+        } else {
+          setPosition(JSON.parse(window.localStorage.getItem('position')));
+        }
+      },
+      error => {
+        if (window.localStorage.getItem('position')) {
+          const positionJson = JSON.parse(
+            window.localStorage.getItem('position'),
+          );
+          getPostion(positionJson.latitude, positionJson.longitude);
+        }
+      },
+    );
     setInterval(() => {
       setTime({
         date: moment.tz('Asia/Seoul').format('YYYY.MM.DD'),
@@ -57,23 +66,30 @@ export default function Weather() {
       });
     }, 100);
   }, []);
+
   useEffect(() => {
     function getWeather() {
       const { x, y } = xyConv(position.latitude, position.longitude);
       axios
         .get(
-          `https://cors-anywhere.herokuapp.com/http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastSpaceData?ServiceKey=j%2BeCKcismlZK%2BpaFNLrSPqSvTKVFFiiUqzXfxIXmNPl%2F4dWUGjlDL9wjnnAVFfGUGfJMK62lqnYwqLQe4r88fA%3D%3D&base_date=${moment
+          `https://cors-anywhere.herokuapp.com/http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastGrib?ServiceKey=j%2BeCKcismlZK%2BpaFNLrSPqSvTKVFFiiUqzXfxIXmNPl%2F4dWUGjlDL9wjnnAVFfGUGfJMK62lqnYwqLQe4r88fA%3D%3D&base_date=${moment
             .tz('Asia/Seoul')
-            .format('YYYYMMDD')}&base_time=0500&nx=${x}&ny=${y}&_type=json`,
+            .format('YYYYMMDD')}&base_time=2200&nx=${x}&ny=${y}&_type=json`,
         )
         .then(data => {
-          setWeather(data.data.response.body.items.item);
+          setWeather({
+            time: moment.tz('Asia/Seoul').format('HH:mm'),
+            date: moment.tz('Asia/Seoul').format('YYYY.MM.DD'),
+            item: data.data.response.body.items.item,
+            dong: position.dong,
+          });
           window.localStorage.setItem(
             'weather',
             JSON.stringify({
               time: moment.tz('Asia/Seoul').format('HH:mm'),
               date: moment.tz('Asia/Seoul').format('YYYY.MM.DD'),
               item: data.data.response.body.items.item,
+              dong: position.dong,
             }),
           );
         });
@@ -85,12 +101,14 @@ export default function Weather() {
         setWeather(JSON.parse(window.localStorage.getItem('weather')));
       }
     }
-  }, [position, time, weather]);
+  }, [position, weather]);
+
+  useEffect(() => {}, [time]);
   return (
     <>
+      <header>방구석</header>
       <div id="weatherWrapper">
-        <WeatherImage weather={weather} />
-        <WeatherTimePosition position={position} time={time} />
+        <WeatherCard weather={weather} />
       </div>
     </>
   );
