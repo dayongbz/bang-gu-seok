@@ -47,8 +47,7 @@ export default function Weather() {
       p => {
         if (!window.localStorage.getItem('position')) {
           getPostion(p.coords.latitude, p.coords.longitude);
-        }
-        if (
+        } else if (
           !!JSON.parse(window.localStorage.getItem('position')).latitude &&
           !!JSON.parse(window.localStorage.getItem('position')).longitude
         ) {
@@ -88,6 +87,13 @@ export default function Weather() {
   useEffect(() => {
     function getWeather() {
       setWeatherAxios(false);
+      if (
+        moment.tz('Asia/Seoul').format('HH') === '00' &&
+        +moment.tz('Asia/Seoul').format('mm') < 40
+      ) {
+        setWeatherAxios(true);
+        return;
+      }
       const { x, y } = xyConv(position.latitude, position.longitude);
       let timeBase;
       if (+moment.tz('Asia/Seoul').format('mm') >= 40) {
@@ -97,6 +103,7 @@ export default function Weather() {
       } else {
         timeBase = `${+moment.tz('Asia/Seoul').format('HH00') - 100}`;
       }
+
       axios
         .get(
           `https://cors-anywhere.herokuapp.com/http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastGrib?ServiceKey=j%2BeCKcismlZK%2BpaFNLrSPqSvTKVFFiiUqzXfxIXmNPl%2F4dWUGjlDL9wjnnAVFfGUGfJMK62lqnYwqLQe4r88fA%3D%3D&base_date=${moment
@@ -127,24 +134,18 @@ export default function Weather() {
           setWeatherAxios(true);
         });
     }
-
     if (position && weatherAxios) {
       if (!window.localStorage.getItem('weather')) {
         getWeather();
       } else if (!weather) {
         setWeather(JSON.parse(window.localStorage.getItem('weather')));
       }
-
       if (weather && position) {
         if (
-          +moment.tz('Asia/Seoul').format('YYYYMMDD') -
-            +weather.item[0].baseDate !==
-          0
-        ) {
-          getWeather();
-        } else if (
-          +moment.tz('Asia/Seoul').format('HHmm') - +weather.item[0].baseTime >=
-          140
+          Math.abs(
+            +moment.tz('Asia/Seoul').format('YYYYMMDDHHmm') -
+              +`${weather.item[0].baseDate}${weather.item[0].baseTime}`,
+          ) >= 140
         ) {
           getWeather();
         }
@@ -247,7 +248,6 @@ export default function Weather() {
   }, [weather]);
   return (
     <>
-      <header>방구석</header>
       <div id="weatherWrapper">
         <WeatherMain weather={weather} score={score} />
         <WeatherCard weather={weather} score={score} />
