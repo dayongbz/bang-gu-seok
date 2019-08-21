@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "2cb0fd718329d1271ce42bc49b276c2d",
+    "revision": "aa1472ecf50935f136fb982a278bd4a4",
     "url": "/bang-gu-seok/index.html"
   },
   {
-    "revision": "436bea3999bbb7a551ad",
+    "revision": "a546373834c8f1820186",
     "url": "/bang-gu-seok/static/css/main.d5eee785.chunk.css"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/bang-gu-seok/static/js/2.908c3ede.chunk.js"
   },
   {
-    "revision": "436bea3999bbb7a551ad",
-    "url": "/bang-gu-seok/static/js/main.6482472f.chunk.js"
+    "revision": "a546373834c8f1820186",
+    "url": "/bang-gu-seok/static/js/main.3a840a93.chunk.js"
   },
   {
     "revision": "80655267332843ccec92",
