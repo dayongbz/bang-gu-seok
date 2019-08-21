@@ -47,18 +47,28 @@ export default function Weather() {
       p => {
         if (!window.localStorage.getItem('position')) {
           getPostion(p.coords.latitude, p.coords.longitude);
-        } else {
-          setPosition(JSON.parse(window.localStorage.getItem('position')));
+        }
+        if (
+          !!JSON.parse(window.localStorage.getItem('position')).latitude &&
+          !!JSON.parse(window.localStorage.getItem('position')).longitude
+        ) {
+          if (
+            JSON.parse(window.localStorage.getItem('position')).latitude !==
+              +p.coords.latitude.toFixed(4) ||
+            JSON.parse(window.localStorage.getItem('position')).longitude !==
+              +p.coords.longitude.toFixed(4)
+          ) {
+            getPostion(p.coords.latitude, p.coords.longitude);
+          } else {
+            setPosition(JSON.parse(window.localStorage.getItem('position')));
+          }
         }
       },
       error => {
-        if (window.localStorage.getItem('position')) {
-          const positionJson = JSON.parse(
-            window.localStorage.getItem('position'),
-          );
-          getPostion(positionJson.latitude, positionJson.longitude);
-        } else {
+        if (!window.localStorage.getItem('position')) {
           getPostion(37.645050399999995, 126.786284);
+        } else {
+          setPosition(JSON.parse(window.localStorage.getItem('position')));
         }
       },
     );
@@ -74,6 +84,7 @@ export default function Weather() {
   }, []);
 
   // 날씨 가져오기
+
   useEffect(() => {
     function getWeather() {
       setWeatherAxios(false);
@@ -142,6 +153,7 @@ export default function Weather() {
   }, [position, weather, time, weatherAxios]);
 
   // 점수
+
   useEffect(() => {
     const scoreAll = [];
     if (weather) {

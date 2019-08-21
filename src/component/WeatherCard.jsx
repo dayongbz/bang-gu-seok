@@ -1,108 +1,203 @@
+/* eslint-disable react/require-default-props */
+/* eslint-disable react/forbid-prop-types */
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-export default function WeatherCard({ weather }) {
+export default function WeatherCard({ weather, score }) {
   useEffect(() => {}, [weather]);
   return (
     <div id="weatherCardWrap">
       <p>현재 날씨</p>
       <div id="weatherCardMain">
-        <div className="weatherCard" style={{ marginTop: '0' }}>
+        <div className="weatherCard">
           <p className="title">기온</p>
-          <p className="details">
-            {weather &&
+          {weather &&
+            weather.item.filter(item => item.category === 'T1H')[0].obsrValue <
+              900 &&
+            weather.item.filter(item => item.category === 'T1H')[0].obsrValue >
+              -900 &&
+            (score[0] >= 50 ? (
+              <>
+                <p
+                  className="details"
+                  style={{ color: 'rgba(22, 160, 133, 1)' }}
+                >
+                  {
+                    weather.item.filter(item => item.category === 'T1H')[0]
+                      .obsrValue
+                  }
+                  {' ℃'}
+                </p>
+                <div className="greenLight" />
+              </>
+            ) : (
+              <>
+                <p
+                  className="details"
+                  style={{ color: 'rgba(231, 76, 60, 1)' }}
+                >
+                  {
+                    weather.item.filter(item => item.category === 'T1H')[0]
+                      .obsrValue
+                  }
+                  {' ℃'}
+                </p>
+                <div className="redLight" />
+              </>
+            ))}
+          {weather ? '' : <span className="loading">로딩중</span>}
+          {weather &&
+            (weather.item.filter(item => item.category === 'T1H')[0]
+              .obsrValue >= 900 ||
               weather.item.filter(item => item.category === 'T1H')[0]
-                .obsrValue < 900 &&
-              weather.item.filter(item => item.category === 'T1H')[0]
-                .obsrValue > -900 &&
-              `${
-                weather.item.filter(item => item.category === 'T1H')[0]
-                  .obsrValue
-              } ℃`}
-            {weather ? '' : <span className="loading">로딩중</span>}
-            {weather &&
-              (weather.item.filter(item => item.category === 'T1H')[0]
-                .obsrValue >= 900 ||
-                weather.item.filter(item => item.category === 'T1H')[0]
-                  .obsrValue <= -900) &&
-              '관측실패'}
-          </p>
+                .obsrValue <= -900) && <p className="details">관측실패</p>}
         </div>
-        <div className="weatherCard" style={{ marginTop: '0' }}>
+        <div className="weatherCard">
           <p className="title">비오나?눈오나?</p>
-          <p className="details">
-            {weather &&
-              (weather.item.filter(item => item.category === 'PTY')[0]
-                .obsrValue >= 900 ||
-                weather.item.filter(item => item.category === 'PTY')[0]
-                  .obsrValue <= -900) &&
-              '관측실패'}
-            {weather ? '' : <span className="loading">로딩중</span>}
-            {weather &&
+          {weather &&
+            (weather.item.filter(item => item.category === 'PTY')[0]
+              .obsrValue >= 900 ||
               weather.item.filter(item => item.category === 'PTY')[0]
-                .obsrValue === 0 &&
-              '에잇! 안오네...'}
-            {weather &&
-              weather.item.filter(item => item.category === 'PTY')[0]
-                .obsrValue === 1 &&
-              '나이스! 비온다!'}
-            {weather &&
-              weather.item.filter(item => item.category === 'PTY')[0]
-                .obsrValue === 2 &&
-              '우와~ 비랑 눈 둘다!'}
-            {weather &&
-              weather.item.filter(item => item.category === 'PTY')[0]
-                .obsrValue === 3 &&
-              '나이스! 눈온다!'}
-            {weather &&
-              weather.item.filter(item => item.category === 'PTY')[0]
-                .obsrValue === 4 &&
-              '오! 소나기다!'}
-          </p>
+                .obsrValue <= -900) && <p className="details">관측실패</p>}
+          {weather ? '' : <span className="loading">로딩중</span>}
+          {weather &&
+            weather.item.filter(item => item.category === 'PTY')[0]
+              .obsrValue === 0 && (
+              <>
+                <p
+                  className="details"
+                  style={{ color: 'rgba(22, 160, 133, 1)' }}
+                >
+                  둘다 안옴!
+                </p>
+                <div className="greenLight" />
+              </>
+            )}
+          {weather &&
+            weather.item.filter(item => item.category === 'PTY')[0]
+              .obsrValue === 1 && (
+              <>
+                <p
+                  className="details"
+                  style={{ color: 'rgba(231, 76, 60, 1)' }}
+                >
+                  나이스! 비온다!
+                </p>
+                <div className="redLight" />
+              </>
+            )}
+          {weather &&
+            weather.item.filter(item => item.category === 'PTY')[0]
+              .obsrValue === 2 && (
+              <>
+                <p
+                  className="details"
+                  style={{ color: 'rgba(231, 76, 60, 1)' }}
+                >
+                  우와~ 비랑 눈 둘다!
+                </p>
+                <div className="redLight" />
+              </>
+            )}
+          {weather &&
+            weather.item.filter(item => item.category === 'PTY')[0]
+              .obsrValue === 3 && (
+              <>
+                <p
+                  className="details"
+                  style={{ color: 'rgba(241, 196, 15, 1)' }}
+                >
+                  나이스! 눈온다!
+                </p>
+                <div className="yellowLight" />
+              </>
+            )}
+          {weather &&
+            weather.item.filter(item => item.category === 'PTY')[0]
+              .obsrValue === 4 && (
+              <>
+                <p
+                  className="details"
+                  style={{ color: 'rgba(231, 76, 60, 1)' }}
+                >
+                  오! 소나기다!
+                </p>
+                <div className="redLight" />
+              </>
+            )}
         </div>
-        <div className="weatherCard" style={{ marginTop: '0' }}>
+        <div className="weatherCard">
           <p className="title">습도</p>
-          <p className="details">
-            {weather &&
-              weather.item.filter(item => item.category === 'REH')[0]
-                .obsrValue < 900 &&
-              weather.item.filter(item => item.category === 'REH')[0]
-                .obsrValue > -900 &&
-              `${
-                weather.item.filter(item => item.category === 'REH')[0]
-                  .obsrValue
-              } %`}
+          {weather &&
+            weather.item.filter(item => item.category === 'REH')[0].obsrValue <
+              900 &&
+            weather.item.filter(item => item.category === 'REH')[0].obsrValue >
+              -900 &&
+            (score[2] >= 50 ? (
+              <>
+                <p
+                  className="details"
+                  style={{ color: 'rgba(22, 160, 133, 1)' }}
+                >
+                  {
+                    weather.item.filter(item => item.category === 'REH')[0]
+                      .obsrValue
+                  }
+                  {' %'}
+                </p>
+                <div className="greenLight" />
+              </>
+            ) : (
+              <>
+                <p
+                  className="details"
+                  style={{ color: 'rgba(231, 76, 60, 1)' }}
+                >
+                  {
+                    weather.item.filter(item => item.category === 'REH')[0]
+                      .obsrValue
+                  }
+                  {' %'}
+                </p>
+                <div className="redLight" />
+              </>
+            ))}
 
-            {weather ? '' : <span className="loading">로딩중</span>}
-            {weather &&
-              (weather.item.filter(item => item.category === 'REH')[0]
-                .obsrValue >= 900 ||
-                weather.item.filter(item => item.category === 'REH')[0]
-                  .obsrValue <= -900) &&
-              '관측실패'}
-          </p>
+          {weather ? '' : <span className="loading">로딩중</span>}
+          {weather &&
+            (weather.item.filter(item => item.category === 'REH')[0]
+              .obsrValue >= 900 ||
+              weather.item.filter(item => item.category === 'REH')[0]
+                .obsrValue <= -900) && <p className="details">관측실패</p>}
         </div>
         <div className="weatherCard">
           <p className="title">풍속</p>
-          <p className="details">
-            {weather &&
-              weather.item.filter(item => item.category === 'WSD')[0]
-                .obsrValue < 900 &&
-              weather.item.filter(item => item.category === 'WSD')[0]
-                .obsrValue > -900 &&
-              `${
-                weather.item.filter(item => item.category === 'WSD')[0]
-                  .obsrValue
-              } m/s`}
+          {weather &&
+            weather.item.filter(item => item.category === 'WSD')[0].obsrValue <
+              900 &&
+            weather.item.filter(item => item.category === 'WSD')[0].obsrValue >
+              -900 && (
+              <>
+                <p
+                  className="details"
+                  style={{ color: 'rgba(241, 196, 15, 1)' }}
+                >
+                  {
+                    weather.item.filter(item => item.category === 'WSD')[0]
+                      .obsrValue
+                  }
+                  {' m/s'}
+                </p>
+                <div className="yellowLight" />
+              </>
+            )}
 
-            {weather ? '' : <span className="loading">로딩중</span>}
-            {weather &&
-              (weather.item.filter(item => item.category === 'WSD')[0]
-                .obsrValue >= 900 ||
-                weather.item.filter(item => item.category === 'WSD')[0]
-                  .obsrValue <= -900) &&
-              '관측실패'}
-          </p>
+          {weather ? '' : <span className="loading">로딩중</span>}
+          {weather &&
+            (weather.item.filter(item => item.category === 'WSD')[0]
+              .obsrValue >= 900 ||
+              weather.item.filter(item => item.category === 'WSD')[0]
+                .obsrValue <= -900) && <p className="details">관측실패</p>}
         </div>
         <div className="weatherCard">
           <p className="title">지역기준</p>
@@ -126,4 +221,5 @@ export default function WeatherCard({ weather }) {
 
 WeatherCard.propTypes = {
   weather: PropTypes.object,
+  score: PropTypes.array,
 };
