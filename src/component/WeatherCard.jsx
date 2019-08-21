@@ -11,15 +11,33 @@ export default function WeatherCard({ weather }) {
           <p className="title">기온</p>
           <p className="details">
             {weather &&
+              weather.item.filter(item => item.category === 'T1H')[0]
+                .obsrValue < 900 &&
+              weather.item.filter(item => item.category === 'T1H')[0]
+                .obsrValue > -900 &&
               `${
                 weather.item.filter(item => item.category === 'T1H')[0]
                   .obsrValue
               } ℃`}
+            {weather ? '' : <span className="loading">로딩중</span>}
+            {weather &&
+              (weather.item.filter(item => item.category === 'T1H')[0]
+                .obsrValue >= 900 ||
+                weather.item.filter(item => item.category === 'T1H')[0]
+                  .obsrValue <= -900) &&
+              '관측실패'}
           </p>
         </div>
         <div className="weatherCard" style={{ marginTop: '0' }}>
           <p className="title">비오나?눈오나?</p>
           <p className="details">
+            {weather &&
+              (weather.item.filter(item => item.category === 'PTY')[0]
+                .obsrValue >= 900 ||
+                weather.item.filter(item => item.category === 'PTY')[0]
+                  .obsrValue <= -900) &&
+              '관측실패'}
+            {weather ? '' : <span className="loading">로딩중</span>}
             {weather &&
               weather.item.filter(item => item.category === 'PTY')[0]
                 .obsrValue === 0 &&
@@ -46,29 +64,57 @@ export default function WeatherCard({ weather }) {
           <p className="title">습도</p>
           <p className="details">
             {weather &&
+              weather.item.filter(item => item.category === 'REH')[0]
+                .obsrValue < 900 &&
+              weather.item.filter(item => item.category === 'REH')[0]
+                .obsrValue > -900 &&
               `${
                 weather.item.filter(item => item.category === 'REH')[0]
                   .obsrValue
               } %`}
+
+            {weather ? '' : <span className="loading">로딩중</span>}
+            {weather &&
+              (weather.item.filter(item => item.category === 'REH')[0]
+                .obsrValue >= 900 ||
+                weather.item.filter(item => item.category === 'REH')[0]
+                  .obsrValue <= -900) &&
+              '관측실패'}
           </p>
         </div>
         <div className="weatherCard">
           <p className="title">풍속</p>
           <p className="details">
             {weather &&
+              weather.item.filter(item => item.category === 'WSD')[0]
+                .obsrValue < 900 &&
+              weather.item.filter(item => item.category === 'WSD')[0]
+                .obsrValue > -900 &&
               `${
                 weather.item.filter(item => item.category === 'WSD')[0]
                   .obsrValue
               } m/s`}
+
+            {weather ? '' : <span className="loading">로딩중</span>}
+            {weather &&
+              (weather.item.filter(item => item.category === 'WSD')[0]
+                .obsrValue >= 900 ||
+                weather.item.filter(item => item.category === 'WSD')[0]
+                  .obsrValue <= -900) &&
+              '관측실패'}
           </p>
         </div>
         <div className="weatherCard">
           <p className="title">지역기준</p>
-          <p className="details">{weather && weather.dong}</p>
+          <p className="details">
+            {weather ? '' : <span className="loading">로딩중</span>}
+            {weather && weather.dong}
+          </p>
         </div>
         <div className="weatherCard">
           <p className="title">날짜기준</p>
           <p className="details">
+            {weather ? '' : <span className="loading">로딩중</span>}
             {weather && `${`${weather.item[0].baseTime}`.substring(0, 2)} 시`}
             {weather && <span className="small">{weather.date}</span>}
           </p>

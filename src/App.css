@@ -13,15 +13,22 @@ body {
 }
 
 header {
-  width: 100%;
-  font-size: 2rem;
+  min-width: 1080px;
+  font-size: 1.3rem;
+  font-weight: bold;
   text-align: center;
   line-height: 65px;
   height: 65px;
   background-color: rgb(36, 36, 42);
 }
 
-/* Weather.jsx */
+/* WeatherMain.jsx */
+
+#weatherMain {
+  background-color: rgba(49, 49, 60);
+  min-width: 1080px;
+  height: 200px;
+}
 
 /* WeatherCard.jsx */
 
@@ -30,7 +37,7 @@ header {
   width: 1080px;
   border-radius: 5px;
   background-color: rgba(49, 49, 60);
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 #weatherCardWrap > p {
@@ -79,9 +86,43 @@ header {
 .weatherCard .small {
   font-size: 0.9rem;
   font-weight: normal;
-  opacity: 0.5;
+  opacity: 0.3;
   font-style: italic;
   margin-left: 5px;
+}
+
+.weatherCard .loading {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #c3c3d3;
+  opacity: 0.5;
+  animation-duration: 0.3s;
+  animation-name: loadings;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  display: block;
+}
+
+@keyframes loadings {
+  from {
+    opacity: 0.3;
+  }
+  to {
+    opacity: 0.8;
+  }
+}
+
+#weatherMain h1 {
+  font-size: 2rem;
+  text-align: center;
+  line-height: 200px;
+}
+
+#weatherMain .bold {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #ffc11f;
 }
 
 /* @media screen and (max-width: 500px) {
