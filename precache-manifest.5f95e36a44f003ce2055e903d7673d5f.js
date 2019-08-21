@@ -1,18 +1,18 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "9e2fb3aece8e3b7789ad5a260518380d",
+    "revision": "1e49d48a4e88c83d4752d91faec44779",
     "url": "/bang-gu-seok/index.html"
   },
   {
-    "revision": "d958fcfd5c3ccbaddfed",
-    "url": "/bang-gu-seok/static/css/main.373ef248.chunk.css"
+    "revision": "287fbf76e083849385fe",
+    "url": "/bang-gu-seok/static/css/main.c2b8deda.chunk.css"
   },
   {
     "revision": "d79145237fa63bc3be30",
     "url": "/bang-gu-seok/static/js/2.908c3ede.chunk.js"
   },
   {
-    "revision": "d958fcfd5c3ccbaddfed",
+    "revision": "287fbf76e083849385fe",
     "url": "/bang-gu-seok/static/js/main.c8382b0a.chunk.js"
   },
   {
