@@ -3,6 +3,7 @@ import axios from 'axios';
 import moment from 'moment-timezone';
 import WeatherCard from './WeatherCard';
 import WeatherMain from './WeatherMain';
+import WeatherTime from './WeatherTime';
 import xyConv from './xyConv';
 
 export default function Weather() {
@@ -251,6 +252,7 @@ export default function Weather() {
       <div id="weatherWrapper">
         <WeatherMain weather={weather} score={score} />
         <WeatherCard weather={weather} score={score} />
+        <WeatherTime time={time} />
       </div>
     </>
   );

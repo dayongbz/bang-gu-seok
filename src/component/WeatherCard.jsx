@@ -6,9 +6,9 @@ import PropTypes from 'prop-types';
 export default function WeatherCard({ weather, score }) {
   useEffect(() => {}, [weather]);
   return (
-    <div id="weatherCardWrap">
+    <div className="weatherCardWrap">
       <p>현재 날씨</p>
-      <div id="weatherCardMain">
+      <div className="weatherCardMain">
         <div className="weatherCard">
           <p className="title">기온</p>
           {weather &&
