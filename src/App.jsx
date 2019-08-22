@@ -6,7 +6,9 @@ import Weather from './component/Weather';
 function App() {
   return (
     <>
-      <header>방구석</header>
+      <header>
+        <div id="headerWrap">방구석</div>
+      </header>
       <Weather />
     </>
   );

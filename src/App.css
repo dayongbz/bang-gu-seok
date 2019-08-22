@@ -15,10 +15,14 @@ body {
 header {
   font-size: 1.3rem;
   font-weight: bold;
-  text-align: center;
   line-height: 65px;
   height: 65px;
   background-color: rgb(36, 36, 42);
+}
+
+#headerWrap {
+  width: 100%;
+  text-align: center;
 }
 
 /* WeatherMain.jsx */
@@ -26,14 +30,12 @@ header {
 #weatherMain {
   background-color: rgba(49, 49, 60);
   height: 300px;
-}
-
-#weatherMain {
   font-size: 6rem;
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 #weatherMain p {
@@ -59,7 +61,7 @@ header {
   position: relative;
 }
 
-#weatherMain .scoreWrapper:hover .details {
+#weatherMain .score:hover ~ .details {
   opacity: 1;
 }
 
@@ -79,12 +81,58 @@ header {
 #weatherMain .scoreSub {
   color: #c3c3d3;
   font-size: 0.4em;
-  opacity: 0.3;
+  opacity: 0.2;
   position: absolute;
   right: -90px;
   bottom: 10px;
 }
 
+#weatherMain .help {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 20px;
+  width: 25px;
+  height: 25px;
+  border: 2px solid#c3c3d3;
+  border-radius: 25px;
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+#weatherMain .help:hover {
+  opacity: 1;
+}
+
+#weatherMain .helpDetails {
+  opacity: 0;
+  position: absolute;
+  bottom: 10px;
+  right: 50px;
+  color: #c3c3d3;
+  font-size: 0.8em;
+  background-color: rgb(28, 28, 31);
+  padding: 10px;
+  border-radius: 5px;
+  transition: all 0.3s linear;
+}
+
+#weatherMain .helpDetails .bar {
+  width: 30px;
+  height: 15px;
+  bottom: 0;
+  top: 0;
+  margin: auto;
+  right: -22px;
+  transform: rotate(-90deg);
+}
+
+#weatherMain .help:hover ~ .helpDetails {
+  opacity: 1;
+}
 /* WeatherCard.jsx */
 
 #weatherCardWrap {
@@ -224,8 +272,6 @@ header {
 @media screen and (max-width: 767px) {
   header {
     width: 100%;
-    height: 45px;
-    line-height: 45px;
   }
   #weatherMain {
     display: flex;
@@ -248,9 +294,21 @@ header {
   .weatherCard:last-child {
     margin: 0;
   }
+  #weatherMain .scoreSub {
+    bottom: -40px;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
 }
 
 @media screen and (min-width: 768px) and (max-width: 1079px) {
+  #headerWrap {
+    margin: auto;
+    text-align: left;
+    padding: 0 15px;
+  }
+
   #weatherCardWrap {
     width: 95%;
     margin: inherit auto;
@@ -265,6 +323,12 @@ header {
 }
 
 @media screen and (min-width: 1080px) {
+  #headerWrap {
+    width: 1080px;
+    margin: auto;
+    text-align: left;
+    padding: 0 15px;
+  }
   .weatherCard:nth-child(3n) {
     margin-right: 0;
   }
