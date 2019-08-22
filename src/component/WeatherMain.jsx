@@ -6,21 +6,46 @@ import PropTypes from 'prop-types';
 export default function WeatherMain({ weather, score }) {
   return (
     <div id="weatherMain">
-      <p>
-        오늘의 날씨의 점수는
-        {score &&
-          score.length !== 0 &&
-          (+(score.reduce((a, b) => a + b) / 3).toFixed(2) >= 50 ? (
-            <span className="bold" style={{ color: 'rgba(22, 160, 133, 1)' }}>
+      {score &&
+        score.length !== 0 &&
+        (+(score.reduce((a, b) => a + b) / 3).toFixed(2) >= 50 ? (
+          <>
+            <div
+              className="scoreWrapper"
+              style={{ color: 'rgba(22, 160, 133, 1)' }}
+            >
+              <span className="score">
+                {` ${(score.reduce((a, b) => a + b) / 3).toFixed(2)} `}
+              </span>
+              <span className="scoreSub">/100</span>
+              <div className="details">
+                <p style={{ color: 'rgba(22, 160, 133, 1)' }}>
+                  나가기 좋은 날입니다!
+                </p>
+                <div
+                  className="bar"
+                  style={{ backgroundImage: `url("/images/bar.png")` }}
+                />
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className="score" style={{ color: 'rgba(231, 76, 60, 1)' }}>
+            <span className="score">
               {` ${(score.reduce((a, b) => a + b) / 3).toFixed(2)} `}
             </span>
-          ) : (
-            <span className="bold" style={{ color: 'rgba(231, 76, 60, 1)' }}>
-              {` ${(score.reduce((a, b) => a + b) / 3).toFixed(2)} `}
-            </span>
-          ))}
-        {score ? ' 점 입니다!' : ' 0 점 입니다!'}
-      </p>
+            <span className="scoreSub">/100</span>
+            <div className="details">
+              <p style={{ color: 'rgba(231, 76, 60, 1)' }}>
+                나가면 죽기 좋은 날입니다!
+              </p>
+              <div
+                className="bar"
+                style={{ backgroundImage: `url("/images/bar.png")` }}
+              />
+            </div>
+          </div>
+        ))}
     </div>
   );
 }

@@ -25,7 +25,64 @@ header {
 
 #weatherMain {
   background-color: rgba(49, 49, 60);
-  height: 200px;
+  height: 300px;
+}
+
+#weatherMain {
+  font-size: 6rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#weatherMain p {
+  font-size: 0.2em;
+  font-style: italic;
+  font-weight: normal;
+}
+
+#weatherMain .bar {
+  width: 36px;
+  height: 18px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  bottom: -18px;
+  right: 5px;
+}
+
+#weatherMain .scoreWrapper {
+  font-weight: bold;
+  color: rgba(241, 196, 15, 1);
+  position: relative;
+}
+
+#weatherMain .scoreWrapper:hover .details {
+  opacity: 1;
+}
+
+#weatherMain .details {
+  opacity: 0;
+  position: absolute;
+  padding: 15px;
+  background-color: rgb(28, 28, 31);
+  border-radius: 5px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: -50px;
+  transition: all 0.3s linear;
+}
+
+#weatherMain .scoreSub {
+  color: #c3c3d3;
+  font-size: 0.4em;
+  opacity: 0.3;
+  position: absolute;
+  right: -90px;
+  bottom: 10px;
 }
 
 /* WeatherCard.jsx */
@@ -164,18 +221,6 @@ header {
   }
 }
 
-#weatherMain p {
-  font-size: 2rem;
-  text-align: center;
-  line-height: 200px;
-}
-
-#weatherMain .bold {
-  font-size: 1.5em;
-  font-weight: bold;
-  color: rgba(241, 196, 15, 1);
-}
-
 @media screen and (max-width: 767px) {
   header {
     width: 100%;
@@ -188,11 +233,6 @@ header {
     align-items: center;
     padding: 15px;
   }
-  #weatherMain p {
-    font-size: 1.5rem;
-    line-height: normal;
-  }
-
   #weatherCardWrap {
     width: 95%;
     margin: 10px auto;
