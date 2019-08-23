@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect, useRef } from 'react';
 
 export default function WeatherTime({ time }) {
@@ -25,6 +26,13 @@ export default function WeatherTime({ time }) {
           <div id="hours" ref={hoursRef} />
           <div id="minute" ref={minuteRef} />
           <div id="seconds" ref={secondsRef} />
+          <div className="helpDetails">
+            <p>{time && `${time.hour}시 ${time.minute}분 ${time.seconds}초`}</p>
+            <div
+              className="bar"
+              style={{ backgroundImage: `url("images/bar.png")` }}
+            />
+          </div>
         </div>
       </div>
     </div>

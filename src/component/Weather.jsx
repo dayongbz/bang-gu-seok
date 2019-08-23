@@ -44,6 +44,7 @@ export default function Weather() {
           );
         });
     }
+
     navigator.geolocation.getCurrentPosition(
       p => {
         if (!window.localStorage.getItem('position')) {
@@ -65,11 +66,21 @@ export default function Weather() {
         }
       },
       error => {
-        if (!window.localStorage.getItem('position')) {
-          getPostion(37.645050399999995, 126.786284);
-        } else {
-          setPosition(JSON.parse(window.localStorage.getItem('position')));
-        }
+        axios
+          .get(
+            'https://cors-anywhere.herokuapp.com/https://api.ipify.org/?format=jso',
+          )
+          .then(ip => {
+            axios
+              .get(
+                `https://geo.ipify.org/api/v1?apiKey=at_z90410K91sSrKLz1jegiLyV3MV3ek&ipAddress=${
+                  ip.data
+                }`,
+              )
+              .then(data => {
+                getPostion(data.data.location.lat, data.data.location.lng);
+              });
+          });
       },
     );
     setInterval(() => {
@@ -107,7 +118,7 @@ export default function Weather() {
 
       axios
         .get(
-          `https://cors-anywhere.herokuapp.com/http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastGrib?ServiceKey=j%2BeCKcismlZK%2BpaFNLrSPqSvTKVFFiiUqzXfxIXmNPl%2F4dWUGjlDL9wjnnAVFfGUGfJMK62lqnYwqLQe4r88fA%3D%3D&base_date=${moment
+          `https://cors-anywhere.herokuapp.com/http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastGrib?ServiceKey=AgUmvb8tXYH2nBf2mgAOubgkr%2BqNvPU34C1VcEXlTuSHLAoUc09DB1urM1%2FNNYac6dquC7qM5Gdt%2FZdKu67cBw%3D%3D&base_date=${moment
             .tz('Asia/Seoul')
             .format(
               'YYYYMMDD',
@@ -139,9 +150,16 @@ export default function Weather() {
       if (!window.localStorage.getItem('weather')) {
         getWeather();
       } else if (!weather) {
-        setWeather(JSON.parse(window.localStorage.getItem('weather')));
+        if (
+          position.dong !==
+          JSON.parse(window.localStorage.getItem('weather')).dong
+        ) {
+          getWeather();
+        } else {
+          setWeather(JSON.parse(window.localStorage.getItem('weather')));
+        }
       }
-      if (weather && position) {
+      if (weather) {
         if (
           Math.abs(
             +moment.tz('Asia/Seoul').format('YYYYMMDDHHmm') -

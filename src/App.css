@@ -10,6 +10,7 @@ body {
   font-family: 'Noto Sans KR', sans-serif;
   color: #c3c3d3;
   background-color: rgb(28, 28, 31);
+  padding-bottom: 30px;
 }
 
 header {
@@ -51,7 +52,7 @@ header {
   background-size: cover;
   background-position: center;
   position: absolute;
-  bottom: -18px;
+  bottom: -17px;
   right: 5px;
 }
 
@@ -107,7 +108,7 @@ header {
   opacity: 1;
 }
 
-#weatherMain .helpDetails {
+.helpDetails {
   opacity: 0;
   position: absolute;
   bottom: 10px;
@@ -305,8 +306,8 @@ header {
   transform-origin: center left;
   background-color: #c3c3d3;
   position: absolute;
-  left: 150px;
-  top: 150px;
+  left: 50%;
+  top: 50%;
   box-shadow: 0 0 5px rgba(0, 0, 0, 1);
 }
 
@@ -319,8 +320,8 @@ header {
   transform-origin: center left;
   background-color: #c3c3d3;
   position: absolute;
-  left: 150px;
-  top: 150px;
+  left: 50%;
+  top: 50%;
   box-shadow: 0 0 5px rgba(0, 0, 0, 1);
 }
 
@@ -333,9 +334,33 @@ header {
   transform-origin: center left;
   background-color: #c3c3d3;
   position: absolute;
-  left: 150px;
-  top: 150px;
+  left: 50%;
+  top: 50%;
   box-shadow: 0 0 5px rgba(0, 0, 0, 1);
+}
+
+#clockWrap:hover .helpDetails {
+  opacity: 1;
+}
+
+#clockWrap .helpDetails {
+  opacity: 0;
+  bottom: 310px;
+  right: 90px;
+  font-size: 1rem;
+}
+
+#clockWrap .helpDetails .bar {
+  position: absolute;
+  width: 30px;
+  height: 15px;
+  bottom: -15px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 @media screen and (max-width: 767px) {
@@ -379,18 +404,10 @@ header {
     height: 15px;
   }
 
-  #hours {
-    left: 125px;
-    top: 125px;
-  }
-
-  #minute {
-    left: 125px;
-    top: 125px;
-  }
-  #seconds {
-    left: 125px;
-    top: 125px;
+  #clockWrap .helpDetails {
+    bottom: 260px;
+    right: 60px;
+    font-size: 1rem;
   }
 }
 
