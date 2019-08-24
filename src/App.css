@@ -124,14 +124,12 @@ header {
 #weatherMain .helpDetails .bar {
   width: 30px;
   height: 15px;
-  bottom: 0;
-  top: 0;
-  margin: auto;
+  bottom: 25%;
   right: -22px;
   transform: rotate(-90deg);
 }
 
-#weatherMain .help:hover ~ .helpDetails {
+.help:hover ~ .helpDetails {
   opacity: 1;
 }
 /* WeatherCard.jsx */

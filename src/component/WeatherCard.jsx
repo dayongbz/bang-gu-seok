@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-export default function WeatherCard({ weather, score }) {
+export default function WeatherCard({ weather, score, position }) {
   useEffect(() => {}, [weather]);
   return (
     <div className="weatherCardWrap">
@@ -204,6 +204,13 @@ export default function WeatherCard({ weather, score }) {
           <p className="details">
             {weather ? '' : <span className="loading">로딩중</span>}
             {weather && weather.dong}
+            {position && position.ip === true && (
+              <>
+                <span className="small" style={{ color: '#c3c3d3' }}>
+                  예상위치 입니다
+                </span>
+              </>
+            )}
           </p>
         </div>
         <div className="weatherCard">
@@ -222,4 +229,5 @@ export default function WeatherCard({ weather, score }) {
 WeatherCard.propTypes = {
   weather: PropTypes.object,
   score: PropTypes.array,
+  position: PropTypes.object,
 };

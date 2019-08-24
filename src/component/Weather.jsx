@@ -15,7 +15,7 @@ export default function Weather() {
 
   // 위치 가져오기
   useEffect(() => {
-    function getPostion(lat, long) {
+    function getPostion(lat, long, ip) {
       axios
         .get(
           `https://cors-anywhere.herokuapp.com/https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?request=coordsToaddr&coords=${long.toFixed(
@@ -33,6 +33,7 @@ export default function Weather() {
             latitude: +lat.toFixed(4),
             longitude: +long.toFixed(4),
             dong: data.data.results[0].region.area3.name,
+            ip,
           });
           window.localStorage.setItem(
             'position',
@@ -40,6 +41,7 @@ export default function Weather() {
               latitude: +lat.toFixed(4),
               longitude: +long.toFixed(4),
               dong: data.data.results[0].region.area3.name,
+              ip,
             }),
           );
         });
@@ -78,7 +80,35 @@ export default function Weather() {
                 }`,
               )
               .then(data => {
-                getPostion(data.data.location.lat, data.data.location.lng);
+                if (!window.localStorage.getItem('position')) {
+                  getPostion(
+                    data.data.location.lat,
+                    data.data.location.lng,
+                    true,
+                  );
+                } else if (
+                  !!JSON.parse(window.localStorage.getItem('position'))
+                    .latitude &&
+                  !!JSON.parse(window.localStorage.getItem('position'))
+                    .longitude
+                ) {
+                  if (
+                    JSON.parse(window.localStorage.getItem('position'))
+                      .latitude !== +data.data.location.lat ||
+                    JSON.parse(window.localStorage.getItem('position'))
+                      .longitude !== +data.data.location.lng
+                  ) {
+                    getPostion(
+                      data.data.location.lat,
+                      data.data.location.lng,
+                      true,
+                    );
+                  } else {
+                    setPosition(
+                      JSON.parse(window.localStorage.getItem('position')),
+                    );
+                  }
+                }
               });
           });
       },
@@ -269,7 +299,7 @@ export default function Weather() {
     <>
       <div id="weatherWrapper">
         <WeatherMain weather={weather} score={score} />
-        <WeatherCard weather={weather} score={score} />
+        <WeatherCard weather={weather} score={score} position={position} />
         <WeatherTime time={time} />
       </div>
     </>
