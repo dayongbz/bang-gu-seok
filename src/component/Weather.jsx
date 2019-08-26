@@ -70,46 +70,32 @@ export default function Weather() {
       error => {
         axios
           .get(
-            'https://cors-anywhere.herokuapp.com/https://api.ipify.org/?format=jso',
+            `https://geo.ipify.org/api/v1?apiKey=at_z90410K91sSrKLz1jegiLyV3MV3ek`,
           )
-          .then(ip => {
-            axios
-              .get(
-                `https://geo.ipify.org/api/v1?apiKey=at_z90410K91sSrKLz1jegiLyV3MV3ek&ipAddress=${
-                  ip.data
-                }`,
-              )
-              .then(data => {
-                if (!window.localStorage.getItem('position')) {
-                  getPostion(
-                    data.data.location.lat,
-                    data.data.location.lng,
-                    true,
-                  );
-                } else if (
-                  !!JSON.parse(window.localStorage.getItem('position'))
-                    .latitude &&
-                  !!JSON.parse(window.localStorage.getItem('position'))
-                    .longitude
-                ) {
-                  if (
-                    JSON.parse(window.localStorage.getItem('position'))
-                      .latitude !== +data.data.location.lat ||
-                    JSON.parse(window.localStorage.getItem('position'))
-                      .longitude !== +data.data.location.lng
-                  ) {
-                    getPostion(
-                      data.data.location.lat,
-                      data.data.location.lng,
-                      true,
-                    );
-                  } else {
-                    setPosition(
-                      JSON.parse(window.localStorage.getItem('position')),
-                    );
-                  }
-                }
-              });
+          .then(data => {
+            if (!window.localStorage.getItem('position')) {
+              getPostion(data.data.location.lat, data.data.location.lng, true);
+            } else if (
+              !!JSON.parse(window.localStorage.getItem('position')).latitude &&
+              !!JSON.parse(window.localStorage.getItem('position')).longitude
+            ) {
+              if (
+                JSON.parse(window.localStorage.getItem('position')).latitude !==
+                  +data.data.location.lat ||
+                JSON.parse(window.localStorage.getItem('position'))
+                  .longitude !== +data.data.location.lng
+              ) {
+                getPostion(
+                  data.data.location.lat,
+                  data.data.location.lng,
+                  true,
+                );
+              } else {
+                setPosition(
+                  JSON.parse(window.localStorage.getItem('position')),
+                );
+              }
+            }
           });
       },
     );
