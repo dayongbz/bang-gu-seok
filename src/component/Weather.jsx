@@ -16,6 +16,8 @@ export default function Weather() {
   // 위치 가져오기
   useEffect(() => {
     function getPostion(lat, long, ip) {
+      const API_KEY = '';
+      const API_ID = '';
       axios
         .get(
           `https://cors-anywhere.herokuapp.com/https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?request=coordsToaddr&coords=${long.toFixed(
@@ -23,8 +25,8 @@ export default function Weather() {
           )},${+lat.toFixed(4)}&orders=admcode&output=json`,
           {
             headers: {
-              'X-NCP-APIGW-API-KEY-ID': 'y6syzp2el8',
-              'X-NCP-APIGW-API-KEY': 'oGUQ22oSWOEDf44apBf9QSZVKanLLauMgr5CnBDy',
+              'X-NCP-APIGW-API-KEY-ID': API_ID,
+              'X-NCP-APIGW-API-KEY': API_KEY,
             },
           },
         )
@@ -68,10 +70,9 @@ export default function Weather() {
         }
       },
       error => {
+        const API_KEY = '';
         axios
-          .get(
-            `https://geo.ipify.org/api/v1?apiKey=at_z90410K91sSrKLz1jegiLyV3MV3ek`,
-          )
+          .get(`https://geo.ipify.org/api/v1?apiKey=${API_KEY}`)
           .then(data => {
             if (!window.localStorage.getItem('position')) {
               getPostion(data.data.location.lat, data.data.location.lng, true);
@@ -114,7 +115,12 @@ export default function Weather() {
 
   useEffect(() => {
     function getWeather() {
+      const API_KEY = '';
+      const { x, y } = xyConv(position.latitude, position.longitude);
+      let timeBase;
+
       setWeatherAxios(false);
+
       if (
         moment.tz('Asia/Seoul').format('HH') === '00' &&
         +moment.tz('Asia/Seoul').format('mm') < 40
@@ -122,8 +128,7 @@ export default function Weather() {
         setWeatherAxios(true);
         return;
       }
-      const { x, y } = xyConv(position.latitude, position.longitude);
-      let timeBase;
+
       if (+moment.tz('Asia/Seoul').format('mm') >= 40) {
         timeBase = moment.tz('Asia/Seoul').format('HH00');
       } else if (+moment.tz('Asia/Seoul').format('HH') < 11) {
@@ -134,7 +139,7 @@ export default function Weather() {
 
       axios
         .get(
-          `https://cors-anywhere.herokuapp.com/http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastGrib?ServiceKey=AgUmvb8tXYH2nBf2mgAOubgkr%2BqNvPU34C1VcEXlTuSHLAoUc09DB1urM1%2FNNYac6dquC7qM5Gdt%2FZdKu67cBw%3D%3D&base_date=${moment
+          `https://cors-anywhere.herokuapp.com/http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastGrib?ServiceKey=${API_KEY}&base_date=${moment
             .tz('Asia/Seoul')
             .format(
               'YYYYMMDD',
